@@ -1,34 +1,48 @@
-
-
-
 ##########################################
-###Function to retrieve the extreme fields
-###Input is the spatiotemporal dataset 
-###transformed to Pareto margins
+###Function to retrieve declustered extreme fields
+###Input is the spatiotemporal dataset transformed to Pareto margins
+###Run_length is the minimum number of non-extreme observations between clusters of exceedances
+###The output is a list with three components: 
+###the extreme-fields
+###the 99th percentile of the spatial sum 
+###the indices in the dataset that correspond to the extreme fields
 
-EXTData<-function(Z) {
-	###Z is a spatio-temporal data set with Pareto margins
-    time_steps=dim(Z)[1]
-    num_locations=dim(Z)[2]
-    ###The spatial sum is the radial component
-    spatial_sum=rep(0,time_steps)  ### sum per day
-    for (i in 1:time_steps){
-	    spatial_sum[i]=sum(Z[i,])
-    }
-    ###Indixes corresponding to extreme days  
-    r_O=quantile(spatial_sum,probs=0.95)
-    days_idx = which(spatial_sum>r_O)
-    ext_days = length(days_idx)   ###Number of extreme fields
-
-    ###Retrieving extreme events
-    X=array(0,dim=c(ext_days,num_locations))
-    k=1
-    for (i in days_idx) {	
-        X[k,]=Z[i,]
-        k=k+1
-    }
-    out=list(X,r_O)
-    return (out)
+EXTREMEData <- function(Z, run_length = 7) {
+  # Z is a spatio-temporal data set with Pareto margins
+  time_steps <- dim(Z)[1]
+  num_locations <- dim(Z)[2]
+  
+  # Compute spatial sum (radial component)
+  spatial_sum <- rowSums(Z)
+  
+  # Threshold for extremes (1st percentile = 0.99 quantile)
+  r_O <- quantile(spatial_sum, probs = 0.99)
+  extreme_idx <- which(spatial_sum > r_O)
+  
+  # Declustering: Keep only one (maximum) exceedance per run_length window
+  declustered_idx <- c()
+  i <- 1
+  while (i <= length(extreme_idx)) {
+    # Start of current cluster
+    start_idx <- extreme_idx[i]
+    
+    # Find indices within run_length days
+    cluster_window <- which((extreme_idx - start_idx) <= run_length & (extreme_idx - start_idx) >= 0)
+    cluster_idxs <- extreme_idx[cluster_window]
+    
+    # Keep the index of the maximum spatial sum within the cluster
+    max_idx <- cluster_idxs[which.max(spatial_sum[cluster_idxs])]
+    declustered_idx <- c(declustered_idx, max_idx)
+    
+    # Move to first exceedance outside the cluster window
+    i <- max(cluster_window) + 1
+  }
+  
+  # Retrieve the extreme fields after declustering
+  X <- Z[declustered_idx, , drop = FALSE]  # drop = FALSE preserves matrix structure
+	
+  out <- list(X = X, r_O = r_O, selected_days = declustered_idx)
+  return(out)
 }
 
 
@@ -36,10 +50,10 @@ EXTData<-function(Z) {
 
 #######################################################
 #############FUNCTION for phase randomisation 
-####(input is matrix M; rows: time, columns:location)
+####(input is matrix M of extreme fields; rows: time, columns:location)
 
 
-PRSim<-function(M,r_O,ALPHA) {
+PRSim<-function(M,r_O,ALPHA,semilla) {
 	n.exc <- dim(M)[1]   ### Number of extreme fields
 	n.grid <- dim(M)[2]  ### Number of grid-points
     #################################
@@ -56,6 +70,7 @@ PRSim<-function(M,r_O,ALPHA) {
     #################################
     ###II.Consider random phases
     #################################
+    set.seed(semilla)
     phases_random <- runif(n=length(first_part), min=-pi, max=pi)
     if (n.exc%%2==0) phases_random[length(first_part)] <-0
     ############################################################
@@ -87,3 +102,16 @@ PRSim<-function(M,r_O,ALPHA) {
 }
 
 
+######################################################
+###Function to estimate the proportion of joint exceedance
+
+###Both functions do the same. The optimized version is much faster
+concurrent_optimized <- function(sim_list, n.sim, n.exc, v_O, prop) {
+  count_matrix <- sapply(seq_len(n.sim + 1), function(i) {
+    rowMeans(sim_list[[i]][1:n.exc, ] > v_O) >= prop
+  })
+  suma <- sum(count_matrix)
+  n.fields <- n.exc * (n.sim + 1)
+  estimate <- suma / n.fields
+  return(estimate)
+}
