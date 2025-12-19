@@ -1,2 +1,2 @@
-# Dunkelflaute_estimation
+## Dunkelflaute estimation
 The Estimate_droughts.R file contains a script to estimate return periods of widespread energy droughts across Europe. This is done with respect to more than fourty years of daily capacity factor data on the ERA5 grid. The file PhaseRando.R contains the functions needed for the generation of spatial extremes. The method is laid out by Hans Van de Vyver, in "Fast generation of high-dimensional spatial extremes". 
