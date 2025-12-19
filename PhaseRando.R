@@ -3,9 +3,9 @@
 ###Input is the spatiotemporal dataset transformed to Pareto margins
 ###Run_length is the minimum number of non-extreme observations between clusters of exceedances
 ###The output is a list with three components: 
-###the extreme-fields
-###the 99th percentile of the spatial sum 
-###the indices in the dataset that correspond to the extreme fields
+### 1)The extreme-fields
+### 2)The 99th percentile of the spatial sum 
+### 3)The indices in the dataset that correspond to the extreme fields
 
 EXTREMEData <- function(Z, run_length = 7) {
   # Z is a spatio-temporal data set with Pareto margins
@@ -51,7 +51,7 @@ EXTREMEData <- function(Z, run_length = 7) {
 #######################################################
 #############FUNCTION for phase randomisation 
 ####(input is matrix M of extreme fields; rows: time, columns:location)
-
+### Output is a matrix with randomly generated extreme fields
 
 PRSim<-function(M,r_O,ALPHA,semilla) {
 	n.exc <- dim(M)[1]   ### Number of extreme fields
