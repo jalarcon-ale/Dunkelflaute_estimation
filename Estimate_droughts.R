@@ -113,8 +113,7 @@ for (DELTA in seq(from = 0, to = 1, by = 0.1)) {
 
     ### The spatial data is transformed to 2D, where the order in the 
     ### columns is the one induced by expand.grid
-    Y=matrix(-data_df, nrow = time_steps, ncol = num_locations,
-    byrow=T, dimnames=list(time_evolution,locations))
+    Y=matrix(-data_df, nrow = time_steps, ncol = num_locations, byrow=T)
 
     ###Transforming data to Pareto form
     P=Pareto_margins(Y)
