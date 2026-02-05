@@ -1,11 +1,8 @@
 ## Spatial Dependence
 To estimate the spatial extent of dunkelflautes, we consider one spatial dependence measure from the literature: the F-madogram(see [3, 8]).
-The F-madogram for locations r1 and r2 separated by h = ∥r1 − r2∥ is
-defined as:
-νF (h) =
-1
-2
-E[|F{Z(r1)} − F{Z(r2)}|] , (3)
+The F-madogram for locations $r1$ and $r2$ separated by $h = ∥r1 − r2∥$ is defined as:
+
+$νF (h) = E[|F{Z(r1)} − F{Z(r2)}|]$ , (3)
 where Z(r) represents yearly minima of CFtot at location r, and F is its cumulative
 distribution function. Notably, νF (h) = 1/6 for independent year minima
 and 0 ≤ νF (h) < 1/6 when dependent [3].
