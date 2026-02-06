@@ -1,9 +1,8 @@
-This respository contains the code supporting the project "Statistical Modeling of Widespread Energy Droughts", where two main calculations are addressed: 
+This respository contains the code supporting the project "Statistical Modeling of Widespread Energy Droughts", with the technical report namded in Dutch as $\textit{technische rapport}$ . Two main calculations are addressed in this project: 
 * The estimation of the spatial extent of energy droughts.
 * The estimation of return periods of widespread energy droughts.
 
-These estimations can be done with respect to more than fourty years of daily capacity factor data on the ERA5 grid, as available from the Copernicus climate change service: https://cds.climate.copernicus.eu/datasets/sis-energy-derived-reanalysis?tab=overview
-
+These estimations can be done with respect to more than fourty years of daily capacity factor data on the ERA5 grid, as available from the Copernicus climate change service: https://cds.climate.copernicus.eu/datasets/sis-energy-derived-reanalysis?tab=overview 
 
 ## Spatial Dependence
 To estimate the spatial extent of energy droughts, we consider one spatial dependence measure from the literature: the F-madogram (see A. Gobin and H. Van de Vyver, 2021).
