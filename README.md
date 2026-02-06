@@ -1,4 +1,4 @@
-This respository contains the code supporting the project "Statistical Modeling of Widespread Energy Droughts", with the technical report namded in Dutch as $\textit{technische rapport}$ . Two main calculations are addressed in this project: 
+This respository supports the project $\textbf{Statistical Modeling of Widespread Energy Droughts}$. The written report can here be found with name $\textit{technische_rapport.pdf}$. Two main calculations are addressed in this project: 
 * The estimation of the spatial extent of energy droughts.
 * The estimation of return periods of widespread energy droughts.
 
