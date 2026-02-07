@@ -1,20 +1,11 @@
-This respository supports the project $\textbf{Statistical Modeling of Widespread Energy Droughts}$. The written report can here be found under the name technische_rapport.pdf. Two main calculations are addressed in this project: 
+This respository supports the project $\textbf{Statistical Modeling of Widespread Energy Droughts}$. The written report can be found in this repository under the name technische_rapport.pdf. Two main calculations are addressed in this project: 
 * The estimation of the spatial extent of energy droughts.
 * The estimation of return periods of widespread energy droughts.
 
-These estimations can be done with respect to more than fourty years of daily capacity factor data on the ERA5 grid, as available from the Copernicus climate change service: https://cds.climate.copernicus.eu/datasets/sis-energy-derived-reanalysis?tab=overview 
+These estimations can be done with respect to energy indicators for Europe derived from ERA5-reanalysis (1979-present), as available from the Copernicus climate change service: https://cds.climate.copernicus.eu/datasets/sis-energy-derived-reanalysis?tab=overview. There, we selected the capacity factors of (i) Solar photovoltaic power generation (SPV), and (ii) Onshore wind power generation (WON) and stored the NetCDF data (daily resolution) on the RMI-server.
 
-## Spatial Dependence
-To estimate the spatial extent of energy droughts, we consider one spatial dependence measure from the literature: the F-madogram (see A. Gobin and H. Van de Vyver, 2021).
-The $F$-madogram for locations $r_1$ and $r_2$ separated by $h = ∥r_1 − r_2∥$ is defined as:
-
-$$ v_{F} (h) = \dfrac{1}{2} E[|F{Z(r1)} − F{Z(r2)}|], $$
-
-where $Z(r)$ represents yearly minima of $CF_{tot}$ at location $r$, and $F$ is its cumulative distribution function. Notably, $ν_F (h) = 1/6$ for independent year minima, and $0 ≤ ν_F (h) < 1/6$ when dependent [3].
-
-
-The Spatial_correlation.R file contains a script to estimate the spatial dependence of extremely low energy values $CF_{tot}$.
+### Spatial Dependence
+To estimate the spatial extent of energy droughts, we consider one spatial dependence measure from the literature: the F-madogram (see A. Gobin and H. Van de Vyver, 2021). The Spatial_correlation.R file contains a script to estimate such spatial dependence.
  
-
-## Dunkelflaute estimation
-The Estimate_droughts.R file contains a script to estimate return periods of widespread energy droughts. The PhaseRando.R file contains the functions needed to generate spatial extremes. The method is laid out by H. Van de Vyver, in "Fast generation of high-dimensional spatial extremes". 
+### Dunkelflaute estimation
+The PhaseRando.R file contains the functions needed to generate synthetic spatial extremes, which are in turn used to estimate return periods of widespread energy droughts, as done in the Estimate_droughts.R file. The method is laid out by H. Van de Vyver, 2024.
