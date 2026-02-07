@@ -1,4 +1,4 @@
-This respository supports the project $\textbf{Statistical Modeling of Widespread Energy Droughts}$, which was worked out during an internship at the RMI as part of postgraduate studies. The written report can be found in this repository under the name technische_rapport.pdf. Two main calculations are addressed in this project: 
+This respository supports the project $\textbf{Statistical Modeling of Widespread Energy Droughts}$, which was worked out during an internship at the RMI as part of postgraduate studies. The written report can be found in this repository under the name Technisch_rapport.pdf. Two main calculations are addressed in this project: 
 * The estimation of the spatial extent of energy droughts.
 * The estimation of return periods of widespread energy droughts.
 
